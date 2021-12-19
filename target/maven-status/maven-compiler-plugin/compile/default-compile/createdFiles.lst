@@ -1,0 +1,6 @@
+br\com\paulo\cliente\model\GenericDomain.class
+br\com\paulo\cliente\util\HibernateUtil.class
+br\com\paulo\cliente\dao\ClienteDAO.class
+br\com\paulo\cliente\dao\GenericDAO.class
+br\com\paulo\cliente\bean\ClienteBean.class
+br\com\paulo\cliente\model\Cliente.class
