@@ -68,11 +68,11 @@ public class GenericDAO<Entidade> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Entidade buscar(Long codigo) {
+	public Entidade buscar(Long id) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
 			Criteria consulta = sessao.createCriteria(classe);
-			consulta.add(Restrictions.idEq(codigo));
+			consulta.add(Restrictions.idEq(id));
 			Entidade resultado = (Entidade) consulta.uniqueResult();
 			return resultado;
 		} catch (RuntimeException erro) {

@@ -3,58 +3,104 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Clientes</title>
 </h:head>
 <h:body>
-	<h:form>
+	<p:growl id="mensagem" />
+	<h:form id="formListagem">
 		<p:panel header="Clientes - Listagem">
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{clienteBean.clientes}" var="cliente"
+				rows="5">
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{clienteBean.novo}"
+						update=":mensagem :formCadastro:painel" />
 				</f:facet>
 
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" filterBy="#{cliente.nome}"
+					sortBy="#{cliente.nome}">
+					<h:outputText value="#{cliente.nome}" />
 				</p:column>
 
-				<p:column headerText="Email">
+				<p:column headerText="email" filterBy="#{cliente.email}"
+					sortBy="#{cliente.email}">
+					<h:outputText value="#{cliente.email}" />
+				</p:column>
+
+				<p:column headerText="Telefone" filterBy="#{cliente.telefone}"
+					sortBy="#{cliente.telefone}">
+					<h:outputText value="#{cliente.telefone}"/>
 				</p:column>
 				
-				<p:column headerText="telefone">
+				<p:column headerText="Senha" filterBy="#{cliente.senha}"
+					sortBy="#{cliente.senha}">
+					<h:outputText value="#{cliente.senha}" />
 				</p:column>
 				
-											
+				
+				<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{clienteBean.excluir}" update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação" message="Deseja excluir o Cliente?" icon="ui-icon-alert" />
+							<f:attribute name="clienteSelecionado" value="#{cliente}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{clienteBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="clienteSelecionado" value="#{cliente}" />
+						</p:commandButton>
+				</p:column>									
 			</p:dataTable>
+			
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</p:panel>
 	</h:form>
 
 	<p:dialog header="Clientes - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
-		<h:form>
-			<h:panelGrid columns="2">
-			
-				
+		<h:form id="formCadastro">
+			<h:panelGrid columns="2" id="painel">
 				<p:outputLabel value="Nome" />
-				<p:inputText />
-				
+				<p:inputText id="nome" maxlength="50" size="30"
+					value="#{clienteBean.cliente.nome}" required="true"
+					requiredMessage="O campo 'Nome' é obrigatório" />
+
 				<p:outputLabel value="Email" />
-				<p:inputText />
-				
+				<p:inputText id="email" maxlength="100" size="50"
+					value="#{clienteBean.cliente.email}" required="true"
+					requiredMessage="O campo 'Email' é obrigatório" validatorMessage=" email Inválido">
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
 				<p:outputLabel value="Senha" />
-				<p:password/>
-				
+				<p:password id="senha" maxlength="8" size="8"
+					value="#{clienteBean.cliente.senha}" required="true"
+					requiredMessage="O campo 'Senha' é obrigatório"/>
+
 				<p:outputLabel value="Telefone" />
-				<p:inputText />				
+				<p:inputMask id="telefone" mask="(99)99999-9999"  maxlength="11" size="11"
+					value="#{clienteBean.cliente.telefoneFormatado}"  required="true"
+					requiredMessage="O campo 'Telefone' é obrigatório"/>
 			</h:panelGrid>
 
+
+
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{clienteBean.salvar}" />
+				<p:commandButton value="Salvar"
+					update=":mensagem :formCadastro:painel :formListagem:tabela"
+					actionListener="#{clienteBean.salvar}" />
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>
 </h:body>
 </html>
+

@@ -1,0 +1,3 @@
+br\com\paulo\cliente\dao\ClienteDAOTest.class
+br\com\paulo\cliente\dao\UsuarioDAOteste.class
+br\com\paulo\cliente\util\HibernateUtilTest.class

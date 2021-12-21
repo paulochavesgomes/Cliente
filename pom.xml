@@ -24,6 +24,16 @@
 			</plugin>
 		</plugins>
 	</build>
+	<!-- Repositórios -->
+	<repositories>
+		<!-- PrimeFaces -->
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 	<!-- Dependências -->
 	<dependencies>
 		<!-- Hibernate Core -->
@@ -44,8 +54,10 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
+			<scope>test</scope>
 		</dependency>
+
 
 		<!-- JSF -->
 		<dependency>
@@ -54,12 +66,15 @@
 			<version>2.2.12</version>
 		</dependency>
 
-		<!-- PrimeFaces -->
+	
+		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>5.2</version>
 		</dependency>
+
+
 
 		<!-- OmniFaces -->
 		<dependency>
@@ -73,6 +88,16 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.2</version>
 		</dependency>
 	</dependencies>
 </project>

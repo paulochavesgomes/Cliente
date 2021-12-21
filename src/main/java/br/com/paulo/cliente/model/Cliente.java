@@ -1,9 +1,13 @@
 package br.com.paulo.cliente.model;
 
+
+
+import java.text.ParseException;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
-import org.primefaces.component.password.Password;
+import javax.persistence.Transient;
+import javax.swing.text.MaskFormatter;
 
 @SuppressWarnings("serial")
 @Entity
@@ -24,6 +28,8 @@ public class Cliente extends GenericDomain {
 	public String getNome() {
 		return nome;
 	}
+	@Transient
+	private String telefoneFormatado;
 
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -52,6 +58,27 @@ public class Cliente extends GenericDomain {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public String getTelefoneFormatado() {
+		String tel = this.telefoneFormatado;	
+		if(this.telefone != "" && this.telefone != null) {
+			MaskFormatter maskFormatter = null;
+			try {
+				maskFormatter = new MaskFormatter("(##)#####-####");
+				maskFormatter.setValueContainsLiteralCharacters(false);
+				tel = maskFormatter.valueToString(this.telefone) ; 
+			} catch (ParseException e) {				
+				e.printStackTrace();
+			}	
+		}		
+		return tel;
+	}
+
+	public void setTelefoneFormatado(String telefoneFormatado) {		
+		this.telefoneFormatado = telefoneFormatado;
+		this.telefone = telefoneFormatado.replace("(", "").replace(")", "").replace("-", "");
+	}
+	
 
 	
 	
